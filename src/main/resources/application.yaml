@@ -1,0 +1,43 @@
+server:
+  port: ${NEWS_PORT:8081}
+
+spring:
+  application:
+    name: news-service
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/news}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: classpath:db/master.xml
+    default-schema: public
+    contexts: ${spring.profiles.active:prod} # use "dev" for create test data
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+app:
+  css-style-location: http://localhost:9000/html-bucket/style.css
+  convert-params: ["pandoc", "-f", "markdown", "-t", "html", "--toc", "-c", "${app.css-style-location}"]
+
+aws.s3:
+  endpoint: http://localhost:9000
+  singer: AWSS3V3SignerType
+  access-key: u4QeDzDwDsK74FzE
+  secret-key: Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm
+  region: ru-center
+  bucket-md: md-bucket
+  bucket-html: html-bucket
+  bucket-post-photo: post-photo-bucket

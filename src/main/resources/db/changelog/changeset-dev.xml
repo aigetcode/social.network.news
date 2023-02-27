@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2023-02-11 Demo photo user" author="Ivanitskiy Alexey" context="dev">
+        <insert tableName="POST">
+            <column name="id" value="50b4c7dd-51aa-4062-9bbc-c8a42cb70e56"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="title" value="Студенты сдали экзамен"/>
+            <column name="description" value="Экзамен сдан молодыми студентами"/>
+            <column name="user_uuid" value="50b4c7dd-51aa-4062-9bbc-c8a42cb70e54"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

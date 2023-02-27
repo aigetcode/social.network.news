@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="timestamp.type" value="timestamp(6)" dbms="postgresql"/>
+    <property name="timestamp.type" value="timestamp(6)" dbms="h2"/>
+
+    <property name="string.type" value="java.sql.Types.VARCHAR" dbms="postgresql"/>
+    <property name="string.type" value="java.sql.Types.VARCHAR" dbms="h2"/>
+
+    <property name="text.type" value="text" dbms="postgresql"/>
+    <property name="text.type" value="text" dbms="h2"/>
+
+    <property name="string.unit" value="" dbms="postgresql"/>
+    <property name="string.unit" value="" dbms="h2"/>
+
+    <property name="current.date" value="current_date" dbms="postgresql"/>
+    <property name="current.date" value="current_date" dbms="h2"/>
+
+    <property name="uuid_type" value="uuid" dbms="postgresql"/>
+    <property name="uuid_type" value="uuid" dbms="h2"/>
+
+    <property name="uuid_function" value="uuid_generate_v4()" dbms="postgresql"/>
+    <property name="uuid_function" value="random_uuid()" dbms="h2"/>
+
+
+    <include file="changelog/changeset-0.0.1.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/changeset-dev.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
