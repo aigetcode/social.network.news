@@ -37,19 +37,15 @@ public class PostEntry {
         if (post == null)
             return null;
 
-        PostEntryBuilder postEntry = PostEntry.builder();
-
-        if (post.getId() != null) {
-            postEntry.id(post.getId());
-        }
-
-        postEntry.version(post.getVersion())
+        return PostEntry.builder()
+                .id(post.getId())
+                .version(post.getVersion())
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .userUuid(post.getUserUuid())
                 .photoLinks(post.getPhotoLinks().stream()
                         .map(PhotoLinkEntry::fromPhoto)
-                        .toList());
-        return postEntry.build();
+                        .toList())
+                .build();
     }
 }

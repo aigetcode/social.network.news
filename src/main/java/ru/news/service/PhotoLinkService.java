@@ -75,6 +75,7 @@ public record PhotoLinkService(PhotoLinkRepository repository,
         log.info("Created photos by post id:{}", postId);
     }
 
+    @Deprecated(since = "1.0.0")
     public List<PhotoLinkEntry> getAllPhotosByPostId(String postId, Sort sort) {
         log.info(String.format("Get all photos by post: %s", postId));
 
@@ -84,7 +85,7 @@ public record PhotoLinkService(PhotoLinkRepository repository,
                 .toList();
     }
 
-    public void deletePhotoLink(Long id) {
+    public void delete(Long id) {
         log.info(String.format("Deleting post photo by id[%s]...", id));
 
         var photoLink = repository.findById(id)

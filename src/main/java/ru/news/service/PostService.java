@@ -21,10 +21,11 @@ import java.util.UUID;
 @Service
 public record PostService(PostRepository repository) {
     private static final String POST_NOT_FOUND = "Post not found";
+    private static final String POST_REQUIRED = "Post is required";
 
     public UUID create(Post post) {
         log.info("Create post...");
-        Utils.required(post, "Post is required");
+        Utils.required(post, POST_REQUIRED);
 
         Post saved = repository.save(post);
         log.info("Saved post id:{}", saved);
@@ -33,7 +34,7 @@ public record PostService(PostRepository repository) {
 
     public UUID update(Post post) {
         log.info("Update post...");
-        Utils.required(post, "Post is required");
+        Utils.required(post, POST_REQUIRED);
 
         Post saved = repository.save(post);
         log.info("Updated post id:{}", saved);
@@ -50,7 +51,7 @@ public record PostService(PostRepository repository) {
 
     public PostEntry getPostById(String postId) {
         log.info(String.format("Get post by id[%s]", postId));
-        Utils.required(postId, "Post is required");
+        Utils.required(postId, POST_REQUIRED);
 
         Post user = repository.findById(UUID.fromString(postId))
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND, POST_NOT_FOUND));

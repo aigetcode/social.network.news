@@ -1,4 +1,6 @@
 server:
+  servlet:
+    context-path: "/api"
   port: ${NEWS_PORT:8081}
 
 spring:
@@ -28,15 +30,11 @@ logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
-app:
-  css-style-location: http://localhost:9000/html-bucket/style.css
-  convert-params: ["pandoc", "-f", "markdown", "-t", "html", "--toc", "-c", "${app.css-style-location}"]
-
 aws.s3:
-  endpoint: http://localhost:9000
+  endpoint: ${NEWS_AWS_S3_HOST:http://localhost:9000}
   singer: AWSS3V3SignerType
-  access-key: u4QeDzDwDsK74FzE
-  secret-key: Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm
+  access-key: ${NEWS_AWS_S3_ACCESS_KEY:u4QeDzDwDsK74FzE}
+  secret-key: ${NEWS_AWS_S3_SECRET_KEY:Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm}
   region: ru-center
   bucket-md: md-bucket
   bucket-html: html-bucket

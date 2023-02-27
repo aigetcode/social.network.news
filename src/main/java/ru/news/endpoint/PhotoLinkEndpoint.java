@@ -46,7 +46,7 @@ public class PhotoLinkEndpoint {
     @DeleteMapping("/{photoId}")
     public ResponseEntity<Void> delete(@PathVariable String postId,
                                        @PathVariable Long photoId) {
-        photoLinkService.deletePhotoLink(photoId);
+        photoLinkService.delete(photoId);
         return ResponseEntity.ok().build();
     }
 

@@ -21,14 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-//имя_сервиса/posts/{post_uuid}/photos/{photo_uuid}
-//        имя_сервиса/posts/{post_uuid}
 
 @Entity
 @Table(name = "POST")
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {

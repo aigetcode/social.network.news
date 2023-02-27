@@ -1,0 +1,24 @@
+server:
+  servlet:
+    context-path: "/api"
+spring:
+  datasource:
+    url: jdbc:h2:mem:users;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            drop-source: script
+            drop-script-source: drop-tables.sql
+  liquibase:
+    enabled: true
+    drop-first: true
+    change-log: classpath:db/master.xml
+    default-schema: public
