@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.news.properties.S3Properties;
 
 @Component
-public class PhotoPostRepository extends S3Repository {
-    public PhotoPostRepository(AmazonS3 client, S3Properties properties) {
+public class PhotoPostS3Repository extends S3Repository {
+    public PhotoPostS3Repository(AmazonS3 client, S3Properties properties) {
         super(client, properties.getBucketPostPhoto());
     }
 }

@@ -1,5 +1,6 @@
 package ru.news.service;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.util.IOUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -12,14 +13,18 @@ import ru.news.entity.PhotoLink;
 import ru.news.entity.Post;
 import ru.news.exceptions.NotFoundException;
 import ru.news.repository.PhotoLinkRepository;
+import ru.news.repository.PhotoPostS3Repository;
 import ru.news.repository.PostRepository;
 import ru.news.util.Utils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +33,7 @@ import java.util.UUID;
 @Service
 public record PhotoLinkService(PhotoLinkRepository repository,
                                PostRepository postRepository,
-                               StorageService storageService) {
+                               PhotoPostS3Repository photoPostS3Repository) {
     private static final String PHOTO_LINK_PREFIX = "/minio/post-photo-bucket/";
 
     public void create(String postId, List<MultipartFile> files) {
@@ -44,10 +49,17 @@ public record PhotoLinkService(PhotoLinkRepository repository,
                 Path tempFile = Files.createTempFile("temp",
                         "." + FilenameUtils.getExtension(filename));
                 InputStream fileInputStream = multipartFile.getInputStream();
-                try (FileOutputStream output = new FileOutputStream(tempFile.toFile())) {
+
+                File file = tempFile.toFile();
+                try (FileOutputStream output = new FileOutputStream(file)) {
                     IOUtils.copy(fileInputStream, output);
                 }
-                storageService.putImageFile(filename, tempFile.toFile());
+                try (FileInputStream inputStream = new FileInputStream(file)) {
+                    ObjectMetadata metadata = new ObjectMetadata();
+                    metadata.setContentLength(file.length());
+                    metadata.setContentType(Files.probeContentType(Paths.get(file.toURI())));
+                    photoPostS3Repository.put(filename, inputStream, metadata);
+                }
 
                 var photo = PhotoLink.builder()
                         .link(PHOTO_LINK_PREFIX + filename)
@@ -75,15 +87,11 @@ public record PhotoLinkService(PhotoLinkRepository repository,
     public void deletePhotoLink(Long id) {
         log.info(String.format("Deleting post photo by id[%s]...", id));
 
-        try {
-            var photoLink = repository.findById(id)
-                    .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND, "Not found photo by id"));
-            storageService.removeFile(photoLink.getFileKey());
-            repository.deleteById(id);
-            log.info(String.format("Deleted post photo by id[%s]...", id));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        var photoLink = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND, "Not found photo by id"));
+        photoPostS3Repository.delete(photoLink.getFileKey());
+        repository.deleteById(id);
+        log.info(String.format("Deleted post photo by id[%s]...", id));
     }
 
 }
