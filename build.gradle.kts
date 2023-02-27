@@ -27,11 +27,11 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springVersion}")
     implementation("org.springframework.boot:spring-boot-starter-validation:${springVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:${springVersion}")
     implementation("org.springframework.boot:spring-boot-starter-web:${springVersion}")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.414")
     implementation("org.apache.commons:commons-io:1.3.2")
     implementation("org.liquibase:liquibase-core:4.18.0")
+    implementation("com.google.code.findbugs:jsr305:3.0.2")
 
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")

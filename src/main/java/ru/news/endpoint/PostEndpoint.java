@@ -34,7 +34,7 @@ public class PostEndpoint {
     @GetMapping
     public ResponseEntity<Page<PostEntry>> getPagePosts(@RequestParam(value = "pageIndex") int pageIndex,
                                                         @RequestParam(value = "pageSize") int pageSize,
-                                                        @RequestParam(value = "sorting", defaultValue = "id,desc",
+                                                        @RequestParam(value = "sorting", defaultValue = "title,desc",
                                                                 required = false) String[] sortEntries) {
         Page<PostEntry> users = postService.getPagePosts(pageIndex, pageSize, SortDto.toSort(sortEntries));
         return ResponseEntity.ok(users);
