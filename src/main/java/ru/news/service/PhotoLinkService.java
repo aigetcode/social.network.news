@@ -73,9 +73,17 @@ public record PhotoLinkService(PhotoLinkRepository repository,
     }
 
     public void deletePhotoLink(Long id) {
-        log.info(String.format("Deleting photo post by id[%s]...", id));
-        repository.deleteById(id);
-        log.info(String.format("Deleted photo post by id[%s]...", id));
+        log.info(String.format("Deleting post photo by id[%s]...", id));
+
+        try {
+            var photoLink = repository.findById(id)
+                    .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND, "Not found photo by id"));
+            storageService.removeFile(photoLink.getFileKey());
+            repository.deleteById(id);
+            log.info(String.format("Deleted post photo by id[%s]...", id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -50,9 +50,12 @@ public record StorageService(MdRepository mdRepository,
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.length());
             metadata.setContentType(Files.probeContentType(Paths.get(file.toURI())));
-            PutObjectResult putObjectResult = photoPostRepository.put(key, fileInputStream, metadata);
-            System.out.println(putObjectResult);
+            photoPostRepository.put(key, fileInputStream, metadata);
         }
+    }
+
+    public void removeFile(String key) throws IOException {
+        photoPostRepository.delete(key);
     }
 
     public LocalDateTime getMdFileModificationTime(String key) {
