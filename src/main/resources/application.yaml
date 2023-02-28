@@ -27,6 +27,25 @@ spring:
     default-schema: public
     contexts: ${spring.profiles.active:prod} # use "dev" for create test data
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  zipkin:
+    tracing:
+      endpoint: ${USER_ZIPKIN_URL:http://localhost:9411/api/v2/spans}
+
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
