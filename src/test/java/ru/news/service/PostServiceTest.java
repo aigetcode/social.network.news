@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import ru.news.entity.Post;
 import ru.news.exceptions.NotFoundException;
 import ru.news.repository.PostRepository;
+import ru.news.service.impl.DefaultPostService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ class PostServiceTest {
     private PostRepository postRepository;
 
     @InjectMocks
-    private PostService postService;
+    private DefaultPostService postService;
 
     @Test
     void shouldSuccessCreatePost() {

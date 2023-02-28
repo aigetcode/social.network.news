@@ -15,6 +15,7 @@ import ru.news.exceptions.NotFoundException;
 import ru.news.repository.PhotoLinkRepository;
 import ru.news.repository.PhotoPostS3Repository;
 import ru.news.repository.PostRepository;
+import ru.news.service.impl.DefaultPhotoLinkService;
 
 import java.io.FileInputStream;
 import java.util.Collections;
@@ -43,7 +44,7 @@ class PhotoLinkServiceTest {
     private PhotoPostS3Repository photoPostS3Repository;
 
     @InjectMocks
-    private PhotoLinkService photoLinkService;
+    private DefaultPhotoLinkService photoLinkService;
 
     @Test
     void shouldSuccessCreatePhoto() {
