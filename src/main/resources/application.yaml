@@ -1,4 +1,8 @@
 server:
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 1024
   servlet:
     context-path: "/api"
   port: ${NEWS_PORT:8081}
@@ -50,12 +54,29 @@ logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
-aws.s3:
-  endpoint: ${NEWS_AWS_S3_HOST:http://localhost:9000}
-  singer: AWSS3V3SignerType
-  access-key: ${NEWS_AWS_S3_ACCESS_KEY:u4QeDzDwDsK74FzE}
-  secret-key: ${NEWS_AWS_S3_SECRET_KEY:Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm}
-  region: ru-center
-  bucket-md: md-bucket
-  bucket-html: html-bucket
-  bucket-post-photo: post-photo-bucket
+aws:
+  s3:
+    endpoint: ${NEWS_AWS_S3_HOST:http://localhost:9000}
+    singer: AWSS3V3SignerType
+    access-key: ${NEWS_AWS_S3_ACCESS_KEY:u4QeDzDwDsK74FzE}
+    secret-key: ${NEWS_AWS_S3_SECRET_KEY:Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm}
+    region: ru-center
+    bucket-md: md-bucket
+    bucket-html: html-bucket
+    bucket-post-photo: post-photo-bucket
+
+springdoc:
+  api-docs:
+    path: "/api-docs" #api will response on /api-docs
+  swagger-ui:
+    path: "/swagger-ui.html" # swagger: http://localhost:8080/api/swagger-ui/index.html
+    version: "v1"
+
+api:
+  response-codes:
+    ok:
+      desc: OK
+    badRequest:
+      desc: BAD_REQUEST
+    notFound:
+      desc: NOT_FOUND

@@ -1,5 +1,6 @@
 package ru.news.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Дто для сортировки", defaultValue = "sorting=\"field, direction\"")
 public class SortDto {
-
     private String fieldName;
     private Sort.Direction sortOrder;
 
@@ -37,5 +38,4 @@ public class SortDto {
     private static Sort.Direction getSortDirection(String direction) {
         return direction.contains("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
-
 }

@@ -1,5 +1,11 @@
 package ru.news.endpoint;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,24 +20,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import ru.news.dto.SortDto;
 import ru.news.dto.entry.PostEntry;
 import ru.news.dto.input.PostInput;
+import ru.news.endpoint.mvc.Api;
 import ru.news.entity.Post;
+import ru.news.exceptions.ExceptionResponse;
 import ru.news.service.PostService;
 
 import java.util.UUID;
 
-@RestController
+@Api
 @Validated
 @RequestMapping("/v1/posts")
 @RequiredArgsConstructor
+@Tag(name = "Post endpoint")
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "${api.response-codes.ok.desc}"),
+        @ApiResponse(responseCode = "400", content = {
+                @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionResponse.class))},
+                description = "${api.response-codes.badRequest.desc}"),
+        @ApiResponse(responseCode = "404", content = {
+                @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionResponse.class))},
+                description = "${api.response-codes.notFound.desc}")
+})
 public class PostEndpoint {
-
     private final PostService postService;
 
     @GetMapping
+    @Operation(summary = "Get page posts")
     public ResponseEntity<Page<PostEntry>> getPagePosts(@RequestParam(value = "pageIndex") int pageIndex,
                                                         @RequestParam(value = "pageSize") int pageSize,
                                                         @RequestParam(value = "sorting", defaultValue = "title,desc",
@@ -41,6 +60,7 @@ public class PostEndpoint {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get post by id")
     public ResponseEntity<PostEntry> getPostById(@PathVariable String id) {
         PostEntry user = postService.getPostById(id);
         return ResponseEntity.ok(user);
@@ -48,6 +68,7 @@ public class PostEndpoint {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create post")
     public ResponseEntity<String> create(@Valid @RequestBody PostInput userInput) {
         Post post = userInput.toPost();
         UUID uuid = postService.create(post);
@@ -55,9 +76,9 @@ public class PostEndpoint {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete post")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         postService.deleteUser(UUID.fromString(id));
         return ResponseEntity.ok().build();
     }
-
 }

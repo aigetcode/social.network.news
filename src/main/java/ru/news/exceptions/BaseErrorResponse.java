@@ -8,7 +8,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class BaseErrorResponse {
-
     private String message;
     private Date time;
 

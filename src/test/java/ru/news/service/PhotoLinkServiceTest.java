@@ -53,9 +53,9 @@ class PhotoLinkServiceTest {
                 "file",
                 "hello.txt",
                 MediaType.TEXT_PLAIN_VALUE,
-                "Hello, World!".getBytes()
+                "Hello World!".getBytes()
         );
-        Post post = Post.builder()
+        var post = Post.builder()
                 .id(UUID.fromString(postId))
                 .title("test")
                 .build();

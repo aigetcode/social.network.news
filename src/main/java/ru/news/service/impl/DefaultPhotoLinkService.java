@@ -2,7 +2,6 @@ package ru.news.service.impl;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.util.IOUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Primary;
@@ -51,13 +50,12 @@ public record DefaultPhotoLinkService(PhotoLinkRepository repository,
                 String filename = multipartFile.getOriginalFilename();
                 Path tempFile = Files.createTempFile("temp",
                         "." + FilenameUtils.getExtension(filename));
-                InputStream fileInputStream = multipartFile.getInputStream();
 
                 File file = tempFile.toFile();
-                try (FileOutputStream output = new FileOutputStream(file)) {
+                try (InputStream fileInputStream = multipartFile.getInputStream();
+                        FileOutputStream output = new FileOutputStream(file);
+                        FileInputStream inputStream = new FileInputStream(file)) {
                     IOUtils.copy(fileInputStream, output);
-                }
-                try (FileInputStream inputStream = new FileInputStream(file)) {
                     ObjectMetadata metadata = new ObjectMetadata();
                     metadata.setContentLength(file.length());
                     metadata.setContentType(Files.probeContentType(Paths.get(file.toURI())));
@@ -70,8 +68,8 @@ public record DefaultPhotoLinkService(PhotoLinkRepository repository,
                         .post(post)
                         .build();
                 repository.save(photo);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         }
 

@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
-
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler
     public ResponseEntity<ExceptionResponse<BaseErrorResponse>> handle(Throwable ex) {
         log.error("Exception handling and serialization: " + ex.getMessage(), ex);
         BaseErrorResponse baseErrorResponse = new BaseErrorResponse(ex.getMessage());
@@ -37,5 +36,4 @@ public class ExceptionHandlerAdvice {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(ExceptionResponse.from(ex, baseErrorResponse));
     }
-
 }

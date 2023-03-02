@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "aws.s3")
 public class S3Properties {
-
     private String endpoint;
     private String signer;
     private String accessKey;
@@ -17,5 +16,4 @@ public class S3Properties {
     private String bucketMd;
     private String bucketHtml;
     private String bucketPostPhoto;
-
 }
