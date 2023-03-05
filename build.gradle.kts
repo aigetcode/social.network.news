@@ -34,6 +34,7 @@ dependencies {
     implementation("org.liquibase:liquibase-core:4.18.0")
     implementation("com.google.code.findbugs:jsr305:3.0.2")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+    implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
