@@ -5,7 +5,7 @@ server:
     min-response-size: 1024
   servlet:
     context-path: "/api"
-  port: ${NEWS_PORT:8081}
+  port: ${SERVICE_PORT:8081}
 
 spring:
   application:
@@ -48,7 +48,7 @@ management:
         enabled: true
   zipkin:
     tracing:
-      endpoint: ${USER_ZIPKIN_URL:http://localhost:9411/api/v2/spans}
+      endpoint: ${SERVICE_ZIPKIN_URL:http://localhost:9411/api/v2/spans}
 
 logging:
   pattern:
@@ -56,10 +56,10 @@ logging:
 
 aws:
   s3:
-    endpoint: ${NEWS_AWS_S3_HOST:http://localhost:9000}
+    endpoint: ${SERVICE_AWS_S3_HOST:http://localhost:9000}
     singer: AWSS3V3SignerType
-    access-key: ${NEWS_AWS_S3_ACCESS_KEY:u4QeDzDwDsK74FzE}
-    secret-key: ${NEWS_AWS_S3_SECRET_KEY:Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm}
+    access-key: ${SERVICE_AWS_S3_ACCESS_KEY:u4QeDzDwDsK74FzE}
+    secret-key: ${SERVICE_AWS_S3_SECRET_KEY:Efmm0HwgHfH2lJM0VmdG8ehKaUz2WRNm}
     region: ru-center
     bucket-md: md-bucket
     bucket-html: html-bucket
@@ -74,7 +74,7 @@ springdoc:
 
 api:
   logstash:
-    url: ${NEWS_LOGSTASH_URL:localhost:5000}
+    url: ${SERVICE_LOGSTASH_URL:localhost:5000}
   response-codes:
     ok:
       desc: OK
