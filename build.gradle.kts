@@ -3,6 +3,10 @@ plugins {
     id("org.springframework.boot") version "3.0.3"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.google.cloud.tools.jib") version "3.3.1"
+    id("org.sonarqube") version "3.5.0.2730"
+    id("com.dorongold.task-tree") version "2.1.0"
+    id("nebula.integtest") version "9.6.2"
+    checkstyle
 }
 
 group = "ru.news"
@@ -47,6 +51,10 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:${springVersion}")
     testImplementation("com.h2database:h2")
+
+    integTestImplementation("org.springframework.cloud:spring-cloud-contract-wiremock:4.0.0")
+    integTestImplementation("org.testcontainers:junit-jupiter:1.17.6")
+    integTestImplementation("org.testcontainers:postgresql:1.17.6")
 }
 
 tasks.withType<Test> {
@@ -58,6 +66,21 @@ tasks.jar {
 }
 tasks.bootJar {
     archiveBaseName.set(projectName)
+}
+
+checkstyle {
+    toolVersion = "10.3.2"
+    isIgnoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "social-users")
+        property("sonar.organization", "aigetcode")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 jib.to.image = "social-gateway:${version}"

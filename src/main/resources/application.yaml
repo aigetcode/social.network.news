@@ -29,7 +29,7 @@ spring:
     drop-first: false
     change-log: classpath:db/master.xml
     default-schema: public
-    contexts: ${spring.profiles.active:prod} # use "dev" for create test data
+    contexts: ${spring.profiles.active:dev} # dev, prod
 
 management:
   tracing:
@@ -73,6 +73,8 @@ springdoc:
     version: "v1"
 
 api:
+  logstash:
+    url: ${NEWS_LOGSTASH_URL:localhost:5000}
   response-codes:
     ok:
       desc: OK

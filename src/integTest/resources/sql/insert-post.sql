@@ -1,0 +1,2 @@
+insert into post (id, version, title, description, user_uuid)
+values ('50b4c7dd-51aa-4062-9bbc-c8a42cb70e56',1,'Студенты сдали экзамен','Экзамен сдан молодыми студентами','50b4c7dd-51aa-4062-9bbc-c8a42cb70e54');

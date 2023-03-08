@@ -1,0 +1,15 @@
+# Smoke CI use for check after deploy on stand (dev, perProd, prod)
+
+#name: SmokeCI
+#on:
+#  push:
+#    branches:
+#      - 'none'
+#jobs:
+#  curl:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: curl
+#        uses: wei/curl@master
+#        with:
+#          args: https://github.com/aigetcode/social.network.users/tree/main
