@@ -58,10 +58,10 @@ public class PhotoLinkEndpoint {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Создать фотографии к посту и сохранить в S3")
-    public ResponseEntity<String> create(@PathVariable String postId,
-                                         @RequestPart(value = "files", required = false) List<MultipartFile> files) {
-        photoLinkService.create(postId, files);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<Long>> create(@PathVariable String postId,
+                                         @RequestParam(required = false) List<MultipartFile> file) {
+        List<Long> photoId = photoLinkService.create(postId, file);
+        return ResponseEntity.ok(photoId);
     }
 
     @DeleteMapping("/{photoId}")
