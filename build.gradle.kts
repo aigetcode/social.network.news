@@ -83,4 +83,4 @@ sonarqube {
     }
 }
 
-jib.to.image = "social-gateway:${version}"
+jib.to.image = "social-news:${version}"
