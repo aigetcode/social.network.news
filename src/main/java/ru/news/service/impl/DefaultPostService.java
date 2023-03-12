@@ -1,6 +1,5 @@
 package ru.news.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -61,7 +60,7 @@ public record DefaultPostService(PostRepository repository) implements PostServi
         return PostEntry.fromPost(user);
     }
 
-    public void deleteUser(UUID id) {
+    public void deletePost(UUID id) {
         log.info(String.format("Deleting post by id[%s]...", id));
         repository.deleteById(id);
         log.info(String.format("Deleted post by id[%s]...", id));

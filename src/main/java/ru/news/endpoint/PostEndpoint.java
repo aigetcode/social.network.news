@@ -78,7 +78,7 @@ public class PostEndpoint {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete post")
     public ResponseEntity<Void> delete(@PathVariable String id) {
-        postService.deleteUser(UUID.fromString(id));
+        postService.deletePost(UUID.fromString(id));
         return ResponseEntity.ok().build();
     }
 }

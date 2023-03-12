@@ -12,5 +12,5 @@ public interface PostService {
     UUID update(Post post);
     Page<PostEntry> getPagePosts(int pageIndex, int pageSize, Sort sort);
     PostEntry getPostById(String postId);
-    void deleteUser(UUID id);
+    void deletePost(UUID id);
 }

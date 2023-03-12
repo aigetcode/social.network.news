@@ -18,8 +18,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 )
         )
 )
-public class Application {
+public class NewsApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(NewsApplication.class, args);
     }
 }

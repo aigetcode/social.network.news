@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,12 +39,14 @@ public record DefaultPhotoLinkService(PhotoLinkRepository repository,
                                       PhotoPostS3Repository photoPostS3Repository) implements PhotoLinkService {
     private static final String PHOTO_LINK_PREFIX = "/minio/post-photo-bucket/";
 
-    public void create(String postId, List<MultipartFile> files) {
+    public List<Long> create(String postId, List<MultipartFile> files) {
         log.info("Create photos...");
         Utils.required(postId, "Post id is required");
+        Utils.required(files, "Files is required");
 
         Post post = postRepository.findById(UUID.fromString(postId))
                 .orElseThrow(() -> new IllegalStateException("Post not found"));
+        List<Long> photoIds = new ArrayList<>();
 
         for (MultipartFile multipartFile : files) {
             try {
@@ -67,13 +70,15 @@ public record DefaultPhotoLinkService(PhotoLinkRepository repository,
                         .fileKey(filename)
                         .post(post)
                         .build();
-                repository.save(photo);
+                photo = repository.save(photo);
+                photoIds.add(photo.getId());
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
         }
 
         log.info("Created photos by post id:{}", postId);
+        return photoIds;
     }
 
     @Deprecated(since = "1.0.0")

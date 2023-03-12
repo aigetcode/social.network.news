@@ -23,8 +23,13 @@ public class PostInput {
     private String description;
 
     public Post toPost() {
-        return Post.builder()
-                .id(UUID.fromString(this.id))
+        var builder = Post.builder();
+
+        if (this.id != null) {
+            builder.id(UUID.fromString(this.id));
+        }
+
+        return builder
                 .version(this.version)
                 .title(this.title)
                 .description(this.description)
