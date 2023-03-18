@@ -1,5 +1,7 @@
 package ru.news.endpoint;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -29,6 +32,9 @@ import ru.news.endpoint.util.PostgresContainerWrapper;
 import java.io.InputStream;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -48,6 +54,9 @@ public class PhotoLinkEndpointTest {
     @Autowired
     private MockMvc mvc;
 
+    @MockBean
+    private AmazonS3 client;
+
     @Container
     private static final PostgreSQLContainer<PostgresContainerWrapper> postgresContainer = new PostgresContainerWrapper();
 
@@ -66,6 +75,9 @@ public class PhotoLinkEndpointTest {
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD,
             config = @SqlConfig(encoding = "utf-8"))
     void createPhotoSuccess() throws Exception {
+        doReturn(new PutObjectResult()).when(client).putObject(any());
+        doNothing().when(client).deleteObject(any());
+
         MvcResult mvcResult;
         try (InputStream inputStream = new ClassPathResource("image/test.jpg").getInputStream()) {
             byte[] bytes = StreamUtils.copyToByteArray(inputStream);

@@ -2,6 +2,7 @@ package ru.news.repository;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -35,7 +36,15 @@ public class S3Repository {
     }
 
     public void put(String key, InputStream inputStream, ObjectMetadata metadata) {
-        client.putObject(bucketName, key, inputStream, metadata);
+        try {
+            client.putObject(bucketName, key, inputStream, metadata);
+        } catch (AmazonS3Exception s3Exception) {
+            log.error("Doesn't exist bucket: " + bucketName, s3Exception);
+            log.info("Create bucket");
+            client.createBucket(bucketName);
+            client.putObject(bucketName, key, inputStream, metadata);
+        }
+
     }
 
     public Optional<S3Object> get(String key) {
