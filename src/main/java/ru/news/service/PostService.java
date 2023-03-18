@@ -9,8 +9,12 @@ import java.util.UUID;
 
 public interface PostService {
     UUID create(Post post);
+
     UUID update(Post post);
+
     Page<PostEntry> getPagePosts(int pageIndex, int pageSize, Sort sort);
+
     PostEntry getPostById(String postId);
+
     void deletePost(UUID id);
 }
