@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface PhotoLinkService {
     List<Long> create(String postId, List<MultipartFile> files);
+
     List<PhotoLinkEntry> getAllPhotosByPostId(String postId, Sort sort);
+
     void delete(Long id);
 }
