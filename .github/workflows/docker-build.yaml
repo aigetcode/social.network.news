@@ -14,7 +14,9 @@ jobs:
           java-version: 17
           distribution: 'adopt'
       - name: Build with Gradle
-        run: ./gradlew bootJar
+        run: |
+          chmod +x gradlew
+          ./gradlew bootJar
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
