@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.news.endpoint.util.PostgresContainerWrapper;
 import ru.news.entity.Post;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;

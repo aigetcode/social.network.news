@@ -3,7 +3,6 @@ plugins {
     id("org.springframework.boot") version "3.0.3"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.google.cloud.tools.jib") version "3.3.1"
-    id("org.sonarqube") version "3.5.0.2730"
     id("com.dorongold.task-tree") version "2.1.0"
     id("nebula.integtest") version "9.6.2"
     checkstyle
@@ -73,14 +72,6 @@ checkstyle {
     isIgnoreFailures = false
     maxWarnings = 0
     maxErrors = 0
-}
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "social-users")
-        property("sonar.organization", "aigetcode")
-        property("sonar.host.url", "https://sonarcloud.io")
-    }
 }
 
 jib.to.image = "social-news:${version}"

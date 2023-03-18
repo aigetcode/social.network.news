@@ -1,5 +1,4 @@
-package ru.news.endpoint;
-
+package ru.news.endpoint.util;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 

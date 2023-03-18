@@ -24,6 +24,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.news.endpoint.mvc.SuccessResponse;
+import ru.news.endpoint.util.PostgresContainerWrapper;
 
 import java.io.InputStream;
 import java.util.List;
