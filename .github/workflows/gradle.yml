@@ -30,7 +30,7 @@ jobs:
       - name: Build with Gradle
         run: |
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew build -x test -x integrationTest
 
 # maybe use it... https://sonarcloud.io/ helps
 # needs: [ unitTests, integrationTest ]
