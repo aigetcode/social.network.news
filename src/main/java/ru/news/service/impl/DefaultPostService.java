@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import ru.news.dto.entry.PostEntry;
 import ru.news.entity.Post;
 import ru.news.exceptions.NotFoundException;
-import ru.news.repository.PostRepository;
+import ru.news.dao.PostRepository;
 import ru.news.service.PostService;
 import ru.news.util.Utils;
 

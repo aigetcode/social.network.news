@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import ru.news.entity.Post;
 import ru.news.exceptions.NotFoundException;
-import ru.news.repository.PostRepository;
+import ru.news.dao.PostRepository;
 import ru.news.service.impl.DefaultPostService;
 
 import java.util.Arrays;

@@ -58,8 +58,8 @@ public class PhotoLinkEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Создать фотографии к посту и сохранить в S3")
     public ResponseEntity<List<Long>> create(@PathVariable String postId,
-                                             @RequestParam List<MultipartFile> file) {
-        List<Long> photoId = photoLinkService.create(postId, file);
+                                             @RequestParam List<MultipartFile> files) {
+        List<Long> photoId = photoLinkService.create(postId, files);
         return ResponseEntity.ok(photoId);
     }
 

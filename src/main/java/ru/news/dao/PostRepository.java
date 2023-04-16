@@ -1,4 +1,4 @@
-package ru.news.repository;
+package ru.news.dao;
 
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
