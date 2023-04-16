@@ -13,9 +13,9 @@ import ru.news.dto.entry.PhotoLinkEntry;
 import ru.news.entity.PhotoLink;
 import ru.news.entity.Post;
 import ru.news.exceptions.NotFoundException;
-import ru.news.repository.PhotoLinkRepository;
-import ru.news.repository.PhotoPostS3Repository;
-import ru.news.repository.PostRepository;
+import ru.news.dao.PhotoLinkRepository;
+import ru.news.dao.PhotoPostS3Repository;
+import ru.news.dao.PostRepository;
 import ru.news.service.PhotoLinkService;
 import ru.news.util.Utils;
 
@@ -73,7 +73,7 @@ public record DefaultPhotoLinkService(PhotoLinkRepository repository,
                 photo = repository.save(photo);
                 photoIds.add(photo.getId());
             } catch (IOException exception) {
-                exception.printStackTrace();
+                throw new IllegalStateException("Something happen while save files for post: " + postId, exception);
             }
         }
 

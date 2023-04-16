@@ -1,4 +1,4 @@
-package ru.news.repository;
+package ru.news.dao;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;

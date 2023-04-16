@@ -81,7 +81,7 @@ public class PhotoLinkEndpointTest {
         MvcResult mvcResult;
         try (InputStream inputStream = new ClassPathResource("image/test.jpg").getInputStream()) {
             byte[] bytes = StreamUtils.copyToByteArray(inputStream);
-            MockMultipartFile file = new MockMultipartFile("file", "test.jpg",
+            MockMultipartFile file = new MockMultipartFile("files", "test.jpg",
                     MediaType.IMAGE_JPEG_VALUE, bytes);
 
             mvcResult = mvc.perform(multipart("/v1/posts/50b4c7dd-51aa-4062-9bbc-c8a42cb70e56/photos")

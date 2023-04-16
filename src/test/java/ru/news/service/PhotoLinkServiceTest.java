@@ -12,9 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.news.entity.PhotoLink;
 import ru.news.entity.Post;
 import ru.news.exceptions.NotFoundException;
-import ru.news.repository.PhotoLinkRepository;
-import ru.news.repository.PhotoPostS3Repository;
-import ru.news.repository.PostRepository;
+import ru.news.dao.PhotoLinkRepository;
+import ru.news.dao.PhotoPostS3Repository;
+import ru.news.dao.PostRepository;
 import ru.news.service.impl.DefaultPhotoLinkService;
 
 import java.io.FileInputStream;
